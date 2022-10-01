@@ -67,6 +67,15 @@ public class Helper {
         JOptionPane.showMessageDialog(null, message, errorTitle, iconNo);
     }
 
+    public static boolean confirm(String str){
+        String msg="";
+        switch (str){
+            case "sure":
+                msg="Bu işlemi gerçekleştirmek istediğinize emin misiniz?";
+                break;
+        }
+        return JOptionPane.showConfirmDialog(null, msg, "Sil", JOptionPane.YES_NO_OPTION) == 0;
+    }
     public static void clearFields(JTextField... fields) {
         for (JTextField field : fields) {
             field.setText(null);

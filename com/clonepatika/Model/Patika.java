@@ -45,4 +45,33 @@ public class Patika {
         }
         return patikaList;
     }
+    public static boolean addPatika(Patika patika) throws SQLException{
+        PreparedStatement pr=DBConnector.getConnect().prepareStatement("INSERT INTO patika set name=?");
+        pr.setString(1,patika.getName());
+        if (pr.executeUpdate()==1) return true; else return false;
+    }
+    public static boolean updatePatika(Patika patika) throws SQLException{
+        PreparedStatement pr=DBConnector.getConnect().prepareStatement("Update patika set name=? where id=?");
+        pr.setString(1,patika.getName());
+        pr.setInt(2,patika.getId());
+        if (pr.executeUpdate()==1) {
+            return true;
+        }  else return false;
+
+    }
+    public static Patika getFetch(int id) throws SQLException{
+        PreparedStatement pr=DBConnector.getConnect().prepareStatement("Select * from patika where id=?");
+        pr.setInt(1,id);
+        ResultSet result=pr.executeQuery();
+        Patika patika=null;
+        while (result.next()){
+            patika=new Patika(result.getInt(1),result.getString(2));
+        }
+        return patika;
+    }
+    public static boolean deletePatika(int id) throws SQLException{
+        PreparedStatement pr=DBConnector.getConnect().prepareStatement("Delete from patika where id=?");
+        pr.setInt(1,id);
+        if(pr.executeUpdate()==1) return true; else return false;
+    }
 }

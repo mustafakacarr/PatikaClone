@@ -72,6 +72,11 @@ public class Patika {
     public static boolean deletePatika(int id) throws SQLException{
         PreparedStatement pr=DBConnector.getConnect().prepareStatement("Delete from patika where id=?");
         pr.setInt(1,id);
-        if(pr.executeUpdate()==1) return true; else return false;
+        if(pr.executeUpdate()==1) {
+
+            return true;
+        } else{
+            return false;
+        }
     }
 }

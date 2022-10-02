@@ -102,6 +102,17 @@ public class User {
         return userObject;
     }
 
+    public static User getFetch(int id) throws SQLException {
+        User userObject = null;
+        PreparedStatement prStatement = DBConnector.getConnect().prepareStatement("Select * from user where id=?");
+        prStatement.setInt(1, id);
+        ResultSet rs = prStatement.executeQuery();
+        if (rs.next()) {
+            userObject = new User(rs.getInt("id"), rs.getString("name"), rs.getString("username"), rs.getString("password"), rs.getString("type"));
+        }
+        return userObject;
+    }
+
     public static boolean deleteUser(int id) throws SQLException {
         PreparedStatement pr = DBConnector.getConnect().prepareStatement("Delete from user where id=?");
         pr.setInt(1, id);
@@ -138,9 +149,9 @@ public class User {
         String query = "SELECT * FROM user where username LIKE '%{{username}}%' AND name LIKE '%{{name}}%' AND type='{{type}}'";
         query = query.replace("{{username}}", username);
         query = query.replace("{{name}}", name);
-       query = query.replace("{{type}}", type);
+        query = query.replace("{{type}}", type);
 
         return query;
     }
 }
-   //
+//

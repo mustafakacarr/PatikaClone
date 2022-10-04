@@ -268,12 +268,11 @@ public class OperatorGUI extends JFrame {
             }
         });
 
-        btn_logout.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+        btn_logout.addActionListener(e -> {
+                    dispose();
+                    LoginGUI loginGUI = new LoginGUI();
+                }
+        );
         btn_addpatika.addActionListener(e -> {
             Patika patika = new Patika(0, fld_patikaname.getText());
             try {
@@ -289,19 +288,19 @@ public class OperatorGUI extends JFrame {
             }
         });
         btn_addcourse.addActionListener(e -> {
-            String courseName=fld_coursename.getText();
-            String softwareLang=fld_softwarelang.getText();
-            Item educatorItem=(Item)cbx_selecteducator.getSelectedItem();
-            Item patikaItem=(Item)cbx_selectpatika.getSelectedItem();
-             try {
-                 Course course=new Course(0,courseName,softwareLang,educatorItem.getKey(),patikaItem.getKey());
-                 if (Course.addCourse(course)){
-                     Helper.showMessage("done");
-                     Helper.clearFields(fld_softwarelang,fld_coursename);
-                     loadCourseModel();
-                 }else {
-                     Helper.showMessage("error");
-                 }
+            String courseName = fld_coursename.getText();
+            String softwareLang = fld_softwarelang.getText();
+            Item educatorItem = (Item) cbx_selecteducator.getSelectedItem();
+            Item patikaItem = (Item) cbx_selectpatika.getSelectedItem();
+            try {
+                Course course = new Course(0, courseName, softwareLang, educatorItem.getKey(), patikaItem.getKey());
+                if (Course.addCourse(course)) {
+                    Helper.showMessage("done");
+                    Helper.clearFields(fld_softwarelang, fld_coursename);
+                    loadCourseModel();
+                } else {
+                    Helper.showMessage("error");
+                }
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

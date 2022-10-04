@@ -153,5 +153,23 @@ public class User {
 
         return query;
     }
+
+    public static User login(String username, String password) throws SQLException {
+        PreparedStatement pr = DBConnector.getConnect().prepareStatement("Select * from user where username=? AND password=?");
+        pr.setString(1, username);
+        pr.setString(2, password);
+        ResultSet rs = pr.executeQuery();
+        User userObj = null;
+
+        if (rs.next()) {
+            if (rs.getString("type").equals("operator")) {
+                userObj = new Operator(rs.getInt("id"), rs.getString("name"), rs.getString("username"), rs.getString("password"), rs.getString("type"));
+            } else {
+                userObj = new User(rs.getInt("id"), rs.getString("name"), rs.getString("username"), rs.getString("password"), rs.getString("type"));
+            }
+        }
+        return userObj;
+    }
+
 }
 //
